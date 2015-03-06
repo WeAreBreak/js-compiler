@@ -1,0 +1,36 @@
+{
+  "name": "js-compiler",
+  "version": "1.0.0",
+  "description": "An easy to hack, modular and extensible JavaScript to JavaScript compiler based on the ECMAScript 5th Edition Standard.",
+  "main": "index.js",
+  "bin": "./cli/js-compiler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://ajuhos@github.com/WeAreBreak/js-compiler.git"
+  },
+  "keywords": [
+    "javascript",
+    "compiler",
+    "parser",
+    "tokenizer",
+    "ecmascript",
+    "minifier",
+    "syntax",
+    "grammar",
+    "module"
+  ],
+  "author": "We Are Break <ajuhos@we-are-break.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WeAreBreak/js-compiler/issues"
+  },
+  "homepage": "https://github.com/WeAreBreak/js-compiler",
+  "dependencies": {
+    "js-compiler-utils": "^1.0.0",
+    "js-parser-utils": "^1.0.0",
+    "js-tokenizer-utils": "^1.0.0"
+  }
+}

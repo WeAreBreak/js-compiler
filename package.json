@@ -1,9 +1,9 @@
 {
   "name": "js-compiler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An easy to hack, modular and extensible JavaScript to JavaScript compiler based on the ECMAScript 5th Edition Standard.",
   "main": "index.js",
-  "bin": "./cli/js-compiler.js",
+  "bin": "./cli/compiler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

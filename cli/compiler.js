@@ -27,7 +27,6 @@ function processArguments() {
         else if(arg === "-i" || arg === "--input") input = process.argv[++i];
         else if(arg === "-o" || arg === "--output") output = process.argv[++i];
         else if(arg === "-e" || arg === "--ensure") includeInq = true;
-        else if(arg === "--experimental") includeExperimental = true;
         else if(arg === "-d" || arg === "--define") definitions = process.argv[++i].split(' ');
         else console.error("[WARNING] Unknown compiler flag: " + arg);
     }
@@ -57,10 +56,6 @@ else {
         includeInq: includeInq
     });
     compiler.init();
-    compiler.include(require('./modules/JavaScript+'));
-    compiler.include(require('./modules/InqScript'));
-    compiler.include(require('./modules/CellScript'));
-    if(includeExperimental) compiler.include(require('./modules/Experimental'));
 
     if(inputIsFolder) {
         var fullInput = path.join(process.cwd(), input);

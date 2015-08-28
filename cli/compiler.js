@@ -4,8 +4,6 @@ var JsCompiler = require("../js-compiler"),
     path         = require("path"),
     dir          = require("../lib/utils/directory");
 
-var archiver = require('archiver');
-
 /// private variables ///
 var enableLog = false;
 var enableMinify = false;
@@ -36,18 +34,6 @@ function processArguments() {
     if(!output) output = input + (inputIsFolder ? "" : ".js");
     return !!input;
 }
-
-var zipFiles = function(input_dir, output_file) {
-    var output = fs.createWriteStream(output_file);
-    var zipArchive = archiver('zip');
-
-    zipArchive.pipe(output);
-    zipArchive.bulk([{src: [path.join(input_dir, '*')],  expand: true}]);
-    zipArchive.finalize(function(err, bytes) {
-        if (err)
-            throw err;
-    });
-};
 
 function walk(dir, ext) {
     var results = [];
@@ -90,13 +76,10 @@ else {
                         var outDir = path.dirname(out);
                         dir.mkdir(outDir, function() {
                             if (err) return console.error("[ERROR] " + err);
-                            fs.readFile(path.join(__dirname, 'project-template.json'), { encoding: "utf8" }, function(err, content) {
-                                results = content.replace("###SCRIPT###", results);
-                                fs.writeFile(path.join(__dirname, '../temp/project.json'), results, { encoding: "utf8" }, function (err) {
-                                    if (err) return console.error("[ERROR] " + err);
-                                    if (enableLog) console.log("Success. :)");
-                                    next(i + 1);
-                                });
+                            fs.writeFile(path.resolve(__dirname, out), results, { encoding: "utf8" }, function (err) {
+                                if (err) return console.error("[ERROR] " + err);
+                                if (enableLog) console.log("Success. :)");
+                                next(i + 1);
                             });
                         });
                     }
@@ -113,20 +96,9 @@ else {
 
             var results = compiler.compile(content);
             if(results) {
-                fs.readFile(path.join(__dirname, 'project-template.json'), { encoding: "utf8" }, function(err, content) {
-                    fs.writeFile(path.resolve(process.cwd(), output + '.scratch'), results, { encoding: "utf8" }, function(err) {
-                        if(err) return console.error("[ERROR] " + err);
-
-                        results = content.replace("###SCRIPT###", results);
-
-                        fs.writeFile(path.join(__dirname, '../temp/project.json'), results, { encoding: "utf8" }, function(err) {
-                            if(err) return console.error("[ERROR] " + err);
-
-                            zipFiles(path.join(__dirname, '../temp'), path.resolve(process.cwd(), output));
-
-                            if(enableLog) console.log("Success. :)");
-                        });
-                    });
+                fs.writeFile(path.resolve(process.cwd(), output), results, { encoding: "utf8" }, function(err) {
+                    if(err) return console.error("[ERROR] " + err);
+                    if(enableLog) console.log("Success. :)");
                 });
             }
         });

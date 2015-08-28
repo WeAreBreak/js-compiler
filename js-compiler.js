@@ -3,9 +3,9 @@
  */
 
 /// includes ///
-var tokenizer = require("./lib/tokenizer"),
-    parser    = require("./lib/parser"),
-    compiler  = require("./lib/compiler");
+var tokenizer = require("./library/tokenizer"),
+    parser    = require("./library/parser"),
+    compiler  = require("./library/compiler");
 
 /// private methods ///
 var initTime = 0;

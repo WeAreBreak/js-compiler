@@ -1,7 +1,7 @@
 {
-  "name": "js-compiler",
-  "version": "1.0.1",
-  "description": "An easy to hack, modular and extensible JavaScript to JavaScript compiler based on the ECMAScript 5th Edition Standard.",
+  "name": "scratch-compiler",
+  "version": "0.0.1",
+  "description": "An easy to hack, modular and extensible JavaScript to Scratch 2.0 compiler based on the ECMAScript 5th Edition Standard.",
   "main": "index.js",
   "bin": "./cli/compiler.js",
   "scripts": {
@@ -9,9 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://ajuhos@github.com/WeAreBreak/js-compiler.git"
+    "url": "https://ajuhos@github.com/WeAreBreak/scratch-compiler.git"
   },
   "keywords": [
+    "scratch",
     "javascript",
     "compiler",
     "parser",
@@ -25,10 +26,11 @@
   "author": "We Are Break <ajuhos@we-are-break.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/WeAreBreak/js-compiler/issues"
+    "url": "https://github.com/WeAreBreak/scratch-compiler/issues"
   },
-  "homepage": "https://github.com/WeAreBreak/js-compiler",
+  "homepage": "https://github.com/WeAreBreak/scratch-compiler",
   "dependencies": {
+    "archiver": "^0.15.0",
     "js-compiler-utils": "^1.0.0",
     "js-parser-utils": "^1.0.0",
     "js-tokenizer-utils": "^1.0.0"

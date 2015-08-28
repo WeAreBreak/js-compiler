@@ -1,0 +1,73 @@
+{
+	"objName": "Stage",
+	"sounds": [{
+			"soundName": "pop",
+			"soundID": 1,
+			"md5": "83a9787d4cb6f3b7632b4ddfebf74367.wav",
+			"sampleCount": 258,
+			"rate": 11025,
+			"format": ""
+		}],
+	"costumes": [{
+			"costumeName": "backdrop1",
+			"baseLayerID": 3,
+			"baseLayerMD5": "739b5e2a2435f6e1ec2993791b423146.png",
+			"bitmapResolution": 1,
+			"rotationCenterX": 240,
+			"rotationCenterY": 180
+		}],
+	"currentCostumeIndex": 0,
+	"penLayerMD5": "5c81a336fab8be57adc039a8a2b33ca9.png",
+	"penLayerID": 0,
+	"tempoBPM": 60,
+	"videoAlpha": 0.5,
+	"children": [{
+			"objName": "Sprite1",
+			"scripts": [[10,10,[["whenGreenFlag"], ["setVar:to:", "a", 3], ["setVar:to:", "b", 7]]], [100,100,[["procDef", "test %n", ["var_3"], [1], false], [ "turnLeft:", ["getParam", "var_3"] ]]], [10,10,[["whenGreenFlag"], ["setVar:to:", "var_6", 5], [ "say:", ["+", ["readVariable", "a"], ["readVariable", "var_6"]] ], [ "forward:", 10 ], [ "think:", "that." ]]], [10,10,[["whenKeyPressed", "space"], [ "say:", "This is space!" ], [ "doAsk", "How are you today?" ], [ "say:", ["answer"] ], ["setVar:to:", "i", 0], [ "doUntil", ["not",[ "<", ["readVariable", "i"], 10 ]], [ [ "say:", ["readVariable", "i"] ], [ "forward:", ["+", ["readVariable", "i"], 1] ], ["changeVar:by:","i",1] ]]]]],
+			"sounds": [{
+					"soundName": "meow",
+					"soundID": 0,
+					"md5": "83c36d806dc92327b9e7049a565c6bff.wav",
+					"sampleCount": 18688,
+					"rate": 22050,
+					"format": ""
+				}],
+			"costumes": [{
+					"costumeName": "costume1",
+					"baseLayerID": 1,
+					"baseLayerMD5": "f9a1c175dbe2e5dee472858dd30d16bb.svg",
+					"bitmapResolution": 1,
+					"rotationCenterX": 47,
+					"rotationCenterY": 55
+				},
+				{
+					"costumeName": "costume2",
+					"baseLayerID": 2,
+					"baseLayerMD5": "6e8bd9ae68fdb02b7e1e3df656a75635.svg",
+					"bitmapResolution": 1,
+					"rotationCenterX": 47,
+					"rotationCenterY": 55
+				}],
+			"currentCostumeIndex": 0,
+			"scratchX": 60,
+			"scratchY": 0,
+			"scale": 1,
+			"direction": 90,
+			"rotationStyle": "normal",
+			"isDraggable": false,
+			"indexInLibrary": 1,
+			"visible": true,
+			"spriteInfo": {
+			}
+		}],
+	"info": {
+		"projectID": "74306218",
+		"scriptCount": 1,
+		"flashVersion": "MAC 18,0,0,232",
+		"swfVersion": "v439.2",
+		"hasCloudData": false,
+		"spriteCount": 1,
+		"videoOn": false,
+		"userAgent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/44.0.2403.157 Safari\/537.36"
+	}
+}

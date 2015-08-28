@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    <div id="visualizer"></div>
+    <div id="editor">
+        var a = 3, b = 7;
+
+        on whenGreenFlag {
+        var b = 5;
+        say(a + b);
+        forward(10);
+        think("that.");
+        }
+
+        on whenKeyPressed('space') {
+        say("This is space!");
+        ask("How are you today?");
+        say(answer);
+        for(var i = 0; i < 10; i++) {
+        say(i)
+        forward(i+1)
+        }
+        }
+    </div>
+    
+    <style>
+        #visualizer {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50%;
+        }
+
+        #editor {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 50%;
+            height: 100%;
+        }
+
+        .block-content.procDef,
+        .block-content.getParam,
+        .block-content.call {
+            background-color: #123456;
+            color: white;
+        }
+
+        .block-content.whenGreenFlag,
+        .block-content.whenKeyPressed {
+            background-color: green;
+            color: white;
+            padding: 15px;
+
+        }
+
+        .block-content.procDef{
+            padding: 15px;
+        }
+
+        .block-content.forward,
+        .block-content.move,
+        .block-content.turnLeft,
+        .block-content.turnRight,
+        .block-content.nextScene
+         {
+            background-color: blue;
+            color: white;
+        }
+
+        .block-content.think,
+        .block-content.say {
+            background-color: purple;
+            color: white;
+        }
+
+        .block-content.doAsk,
+        .block-content.answer{
+            background-color: skyblue;
+            color: black;
+        }
+
+        .block-content.doUntil,
+        .block-content.doIf,
+        .block-content.doIfElse {
+            background-color: black;
+            color: white;
+        }
+
+        .block-content.readVariable,
+        .block-content.setVarto,
+        .block-content.changeVarby {
+            background-color: darkorange;
+            color: white;
+        }
+
+
+
+        .script {
+            margin: 30px;
+        }
+
+        .block-content {
+            border: 1px solid #333333;
+            background-color: red;
+            border-radius: 5px;
+            margin: 0.5px;
+            padding: 2px;
+            display: inline-block;
+        }
+
+        .block.block-inline,
+        .block-list.block-inline
+        {
+            display: inline-block;
+        }
+
+        .block-list {
+            padding-left: 10px;
+        }
+
+        .block-name, .block-value {
+            display: inline;
+        }
+
+        .block-name {
+            margin-right: 5px;
+        }
+
+        .block-value {
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            min-width: 10px;
+            margin-right: 2.5px;
+        }
+    </style>
+
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/javascript");
+        editor.getSession().on('change', function(e) {
+            visualize(editor.getValue());
+        });
+    </script>
+    <script>
+        var visualizer = document.getElementById("visualizer");
+        var singleLineNames = [ '<', '>', '+', '-', '*', '/', '=', 'not', 'procDef', 'readVariable' ];
+        var centralizedNames = ['<', '>', '+', '-', '*', '/', '='];
+
+        function processValue(value, parent) {
+            var txt = document.createElement("span");
+            txt.className = "block-value";
+            txt.innerText = value;
+            parent.appendChild(txt);
+        }
+
+        function processBlock(block, parent, singleLine) {
+            if(Array.isArray(block[0])) return processBlocks(block, parent);
+
+            var isSingleLine = singleLineNames.indexOf(block[0]) != -1;
+            singleLine = singleLine || isSingleLine;
+
+            var div_out = document.createElement("div");
+            div_out.className = "block" + (singleLine ? " block-inline" : "");
+
+            var div = document.createElement("div");
+            div.className = "block-content " + (block[0] && block[0].replace ? block[0].replace(/:/g, '') : block[0]);
+            div_out.appendChild(div);
+
+            var txt = document.createElement("span");
+            txt.className = "block-name";
+            txt.innerText = block[0];
+            if(centralizedNames.indexOf(block[0]) == -1) div.appendChild(txt);
+
+            var children = document.createElement("div");
+            children.className = "block-list" + (singleLine ? " block-inline" : "");
+
+            for(var i = 1; i < block.length; ++i)
+                if(Array.isArray(block[i]))
+                    processBlock(block[i], isSingleLine || i == 1 ? div : children, isSingleLine || i == 1);
+                else
+                    processValue(block[i], div);
+
+            div_out.appendChild(children);
+
+            if(centralizedNames.indexOf(block[0]) != -1) div.insertBefore(txt, div.childNodes[1]);
+
+            parent.appendChild(div_out);
+        }
+
+        function processBlocks(blocks, parent) {
+            for(var i = 0; i < blocks.length; ++i)
+                processBlock(blocks[i], parent);
+        }
+
+        function processScript(scr) {
+            var div_out = document.createElement("div");
+            div_out.className = "script";
+            visualizer.appendChild(div_out);
+
+            processBlocks(scr[2], div_out);
+        }
+
+        function visualize(val) {
+            $.ajax({
+                type: "POST",
+                url: "/",
+                data: JSON.stringify({ input: val }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(obj) {
+                    visualizer.innerHTML = "";
+                    for(var i = 0; i < obj.length; ++i)
+                        processScript(obj[i]);
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

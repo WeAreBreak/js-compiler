@@ -1,0 +1,41 @@
+scene forest = "forest.png";
+var very_global = 42;
+
+actor animal {
+    costume cat = "cat.png" 12 23;
+    costume dog = "dog.png" 32 23;
+
+    sound meow = "meow.png";
+
+    var global = 42, ize = 5;
+
+    function test(a : number, b = "hello") {
+        forward(a);
+        think(b);
+    }
+
+    on whenGreenFlag {
+        var alma, barack, dió;
+        say("How are you today?");
+        while (alma > 4) {
+            if ((alma * (barack - 1)) * 2 > 4 * dió) {
+                var ize = 2;
+                forward(global);
+                turnLeft(15 - alma);
+                turnRight(ize);
+                ize++;
+            }
+            else nextScene();
+        }
+    }
+
+    on whenKeyPressed('a') {
+        var ize = 4;
+        say("space pressed!");
+        forward(ize * global);
+        test(22, "why?");
+        for(var i = 0; i < 10; i += 1) {
+            forward(i);
+        }
+    }
+}

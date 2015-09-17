@@ -1,6 +1,6 @@
 {
   "name": "js-compiler",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "An easy to hack, modular and extensible JavaScript to JavaScript compiler based on the ECMAScript 5th Edition Standard.",
   "main": "index.js",
   "bin": "./cli/compiler.js",

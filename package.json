@@ -23,7 +23,7 @@
     "module"
   ],
   "author": "We Are Break <ajuhos@we-are-break.com>",
-  "license": "MIT",
+  "license": "GPLv2",
   "bugs": {
     "url": "https://github.com/WeAreBreak/js-compiler/issues"
   },
